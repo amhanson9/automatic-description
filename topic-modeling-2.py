@@ -96,7 +96,7 @@ for description in denselist:
     all_keywords.append(keywords)
 
 # Cluster key words from each document to see where there is overlap.
-# true_k is the number of clusters
+# true_k is the number of clusters. Change this number to get clusters that specify topics and don't overlap.
 true_k = 20
 model = KMeans(n_clusters=true_k, init="k-means++", max_iter=100, n_init=1)
 model.fit(vectors)
@@ -104,6 +104,7 @@ order_centroids = model.cluster_centers_.argsort()[:, ::-1]
 terms = vectorizer.get_feature_names_out()
 
 # Save the clusters to a text file in the repo folder.
+# Has the top 10 words in each cluster.
 with open("data/trc_results.txt", "w", encoding="utf-8") as f:
     for i in range(true_k):
         f.write(f"Cluster {i}")
