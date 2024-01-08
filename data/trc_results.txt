@@ -1,0 +1,260 @@
+Cluster 0
+ member
+ transvaal
+ killed
+ members
+ died
+ injured
+ anc
+ mr
+ tvl
+ johannesburg
+
+
+Cluster 1
+ police
+ members
+ arrested
+ cape
+ member
+ tortured
+ assaulted
+ shot
+ named
+ mr
+
+
+Cluster 2
+ sonkombo
+ ndwedwe
+ ndwedwe kwazulu near
+ ndwedwe kwazulu
+ kwazulu near durban
+ near durban
+ arson
+ attacks
+ kwazulu near
+ kwazulu
+
+
+Cluster 3
+ ac
+ amnesty
+ granted
+ granted amnesty
+ mk
+ operatives
+ injured
+ amnesty ac
+ mk operatives
+ granted amnesty ac
+
+
+Cluster 4
+ burnt
+ burnt ifp supporters
+ burnt ifp
+ ifp supporters
+ ifp
+ house
+ supporters
+ supporter house
+ anc
+ anc supporter
+
+
+Cluster 5
+ arson attack
+ arson
+ attack
+ lost
+ destroyed
+ house
+ home
+ supporters
+ conflict
+ anc
+
+
+Cluster 6
+ inkatha
+ inkatha supporters
+ udf
+ supporters
+ near
+ durban
+ supporter
+ kwazulu
+ kwazulu near
+ near durban
+
+
+Cluster 7
+ conflict area
+ political conflict area
+ political conflict
+ political
+ conflict
+ area
+ supporters
+ near
+ durban
+ ongoing
+
+
+Cluster 8
+ shot injured
+ injured
+ shot
+ sap
+ members
+ members sap
+ cape
+ police
+ supporter shot
+ member
+
+
+Cluster 9
+ ifp
+ supporters
+ anc
+ anc supporters
+ natal
+ ifp supporters
+ near
+ conflict
+ kwazulu
+ kwazulu near
+
+
+Cluster 10
+ death
+ stabbed
+ anc
+ supporter
+ supporters
+ ifp
+ anc supporter
+ ifp supporters
+ natal
+ near
+
+
+Cluster 11
+ shot dead
+ dead
+ shot
+ member
+ transvaal
+ members
+ ifp
+ named
+ attack
+ anc
+
+
+Cluster 12
+ members sap
+ sap
+ members
+ shot
+ shot dead
+ dead
+ cape
+ transvaal
+ police
+ soweto
+
+
+Cluster 13
+ cape
+ town
+ shot
+ member
+ members
+ named
+ sap
+ udf
+ arrested
+ injured
+
+
+Cluster 14
+ supporter shot
+ anc supporter shot
+ supporter shot dead
+ supporter
+ anc supporter
+ shot
+ anc
+ shot dead
+ dead
+ ifp
+
+
+Cluster 15
+ security branch
+ branch
+ security
+ ac
+ members
+ operatives
+ amnesty
+ granted
+ granted amnesty
+ tortured
+
+
+Cluster 16
+ chief
+ home
+ burnt
+ supporters
+ mr
+ lost
+ allegedly
+ house
+ destroyed
+ near
+
+
+Cluster 17
+ detained
+ tortured
+ sap
+ members
+ members sap
+ police
+ cape
+ member
+ arrested
+ supporter
+
+
+Cluster 18
+ bophuthatswana
+ police
+ members
+ beaten
+ severely
+ severely beaten
+ arrested
+ tvl
+ assaulted
+ chief
+
+
+Cluster 19
+ beaten
+ severely beaten
+ severely
+ members
+ sap
+ members sap
+ police
+ cape
+ supporter
+ arrested
+
+
