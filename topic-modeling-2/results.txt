@@ -1,184 +1,88 @@
 Cluster 0
--  bophuthatswana
--  police
--  members
--  beaten
--  severely
--  severely beaten
--  arrested
--  tvl
--  assaulted
--  detained
+-  ifp
+-  supporters
+-  anc
+-  ifp supporters
+-  natal
+-  supporter
+-  anc supporters
+-  stabbed
+-  near
+-  death
 
 Cluster 1
--  ifp
--  supporters
--  ifp supporters
--  conflict
--  anc
--  natal
--  anc supporters
--  supporters area
--  near
--  area
+-  members sap
+-  sap
+-  members
+-  shot
+-  cape
+-  police
+-  injured
+-  shot injured
+-  transvaal
+-  assaulted
 
 Cluster 2
--  mk
--  mk operatives
--  operatives
--  ac
--  injured
--  amnesty
--  granted amnesty
--  granted
--  amnesty ac
--  granted amnesty ac
+-  burnt
+-  house
+-  ifp
+-  burnt ifp supporters
+-  burnt ifp
+-  supporters
+-  ifp supporters
+-  anc
+-  house burnt
+-  supporter house
 
 Cluster 3
--  members sap
--  sap
--  members
--  shot
--  cape
--  police
--  assaulted
--  transvaal
--  tortured
--  arrested
-
-Cluster 4
--  anc supporter
--  anc
--  supporter
--  ifp supporters
--  ifp
--  supporters
--  natal
--  burnt
--  near
--  stabbed
-
-Cluster 5
--  shot injured
--  injured
--  shot
--  members
--  sap
--  members sap
--  cape
--  police
--  member
--  transvaal
-
-Cluster 6
--  cape
--  member
--  death
--  members
--  police
--  transvaal
--  named
--  died
--  mr
--  killed
-
-Cluster 7
--  security branch
--  branch
--  security
--  ac
--  members
--  operatives
--  amnesty
--  granted
--  granted amnesty
--  tortured
-
-Cluster 8
--  kwamashu
--  kwamashu durban
--  durban
--  near
--  burnt
--  conflict
--  supporters
--  political
--  political conflict
--  anc
-
-Cluster 9
--  detained
--  tortured
--  police
--  cape
--  members
--  member
--  arrested
--  sap
--  supporter
--  anc
-
-Cluster 10
--  inkatha
--  inkatha supporters
--  udf
--  supporters
--  near
--  kwazulu
--  supporter
--  kwazulu near
--  durban
--  near durban
-
-Cluster 11
--  shot dead
--  dead
--  shot
--  members
--  sap
--  members sap
--  police
--  cape
--  transvaal
--  member
-
-Cluster 12
--  chief
--  home
--  burnt
--  supporters
--  mr
--  lost
--  allegedly
--  house
--  destroyed
--  conflict
-
-Cluster 13
 -  conflict area
 -  political conflict area
 -  political conflict
--  area
 -  political
+-  area
 -  conflict
 -  supporters
--  natal
 -  near
--  ifp
+-  natal
+-  ongoing
 
-Cluster 14
+Cluster 4
 -  arson attack
 -  arson
 -  attack
 -  lost
--  home
--  supporters
--  house
 -  destroyed
+-  home
+-  house
+-  supporters
 -  anc
 -  conflict
 
-Cluster 15
+Cluster 5
+-  detained
+-  tortured
+-  police
+-  cape
+-  members
+-  arrested
+-  member
+-  sap
+-  anc
+-  mr
+
+Cluster 6
+-  injured
+-  members
+-  police
+-  cape
+-  transvaal
+-  shot
+-  died
+-  killed
+-  town
+-  death
+
+Cluster 7
 -  sonkombo
 -  ndwedwe
 -  ndwedwe kwazulu near
@@ -190,19 +94,7 @@ Cluster 15
 -  kwazulu near
 -  kwazulu
 
-Cluster 16
--  ifp supporter
--  ifp
--  supporter
--  anc supporters
--  anc
--  natal
--  supporters
--  near
--  supporter shot
--  kwazulu near
-
-Cluster 17
+Cluster 8
 -  amnesty
 -  ac
 -  granted
@@ -214,7 +106,67 @@ Cluster 17
 -  people
 -  members
 
-Cluster 18
+Cluster 9
+-  chief
+-  home
+-  burnt
+-  supporters
+-  mr
+-  lost
+-  allegedly
+-  house
+-  destroyed
+-  conflict
+
+Cluster 10
+-  udf
+-  udf supporter
+-  supporter
+-  cape
+-  members
+-  sap
+-  supporter shot
+-  members sap
+-  police
+-  named
+
+Cluster 11
+-  member
+-  named
+-  shot
+-  sap
+-  cape
+-  police
+-  injured
+-  anc
+-  mr
+-  transvaal
+
+Cluster 12
+-  bophuthatswana
+-  police
+-  members
+-  beaten
+-  severely
+-  severely beaten
+-  arrested
+-  tvl
+-  assaulted
+-  chief
+
+Cluster 13
+-  security branch
+-  branch
+-  security
+-  ac
+-  members
+-  operatives
+-  amnesty
+-  granted
+-  granted amnesty
+-  tortured
+
+Cluster 14
 -  beaten
 -  severely beaten
 -  severely
@@ -226,15 +178,63 @@ Cluster 18
 -  supporter
 -  arrested
 
-Cluster 19
--  anc supporter shot
+Cluster 15
 -  supporter shot
+-  anc supporter shot
 -  supporter shot dead
 -  anc supporter
 -  anc
--  shot
 -  supporter
+-  shot
 -  shot dead
 -  dead
 -  ifp
+
+Cluster 16
+-  mk
+-  mk operatives
+-  operatives
+-  ac
+-  injured
+-  amnesty
+-  granted amnesty
+-  granted
+-  amnesty ac
+-  granted amnesty ac
+
+Cluster 17
+-  inkatha
+-  inkatha supporters
+-  supporters
+-  udf
+-  near
+-  durban
+-  supporter
+-  kwazulu
+-  kwazulu near
+-  near durban
+
+Cluster 18
+-  shot dead
+-  dead
+-  sap
+-  members sap
+-  shot
+-  members
+-  cape
+-  police
+-  soweto
+-  transvaal
+
+Cluster 19
+-  shot dead
+-  dead
+-  shot
+-  ifp
+-  supporters
+-  anc
+-  ifp supporters
+-  conflict
+-  attack
+-  transvaal
 
