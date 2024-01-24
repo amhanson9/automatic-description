@@ -51,6 +51,20 @@ def remove_stop_words(list_words):
     return reduced_words
 
 
+def word_list(paths):
+    """Convert a list of paths to a list of words."""
+
+    # Splits each path into a list of words and adds them to the word list.
+    words = []
+    for path in paths:
+        path_words = path_to_words_list(path)
+        words.extend(path_words)
+
+    # Removes common words and strings that do not indicate subjects, like "the" and file extensions.
+    words = remove_stop_words(words)
+    return words
+
+
 if __name__ == '__main__':
 
     # Assigns script arguments to variables.
@@ -60,14 +74,8 @@ if __name__ == '__main__':
     # Reads the text file into a list.
     path_list = doc_to_lines_list(path_doc)
 
-    # Splits each path into a list of words and adds them to the word list.
-    word_list = []
-    for path in path_list:
-        words = path_to_words_list(path)
-        word_list.extend(words)
-
-    # Removes common words and strings that do not indicate subjects, like "the" and file extensions.
-    word_list = remove_stop_words(word_list)
+    # Converts the path list into a list of words.
+    word_list = word_list(path_list)
 
     # Just for proof of concept: prints the result for using example_paths.txt as the input.
     expected = ['formats', 'file', 'format', 'desktop', 'recommendations', '2022', 'held', 'trust', 'report', 'held',
