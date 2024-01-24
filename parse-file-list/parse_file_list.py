@@ -51,23 +51,25 @@ def remove_stop_words(list_words):
     return reduced_words
 
 
-# Assigns script arguments to variables.
-path_doc = sys.argv[1]
-skip_number = int(sys.argv[2])
+if __name__ == '__main__':
 
-# Reads the text file into a list.
-path_list = row_to_list(path_doc)
+    # Assigns script arguments to variables.
+    path_doc = sys.argv[1]
+    skip_number = int(sys.argv[2])
 
-# Splits each path into a list of words and adds them to the word list.
-word_list = []
-for path in path_list:
-    words = path_to_list(path)
-    word_list.extend(words)
+    # Reads the text file into a list.
+    path_list = row_to_list(path_doc)
 
-# Removes common words and strings that do not indicate subjects, like "the" and file extensions.
-word_list = remove_stop_words(word_list)
+    # Splits each path into a list of words and adds them to the word list.
+    word_list = []
+    for path in path_list:
+        words = path_to_list(path)
+        word_list.extend(words)
 
-# Just for proof of concept: prints the result for using example_paths.txt as the input.
-expected = ['formats', 'file', 'format', 'desktop', 'recommendations', '2022', 'held', 'trust', 'report', 'held',
-            'trust', 'report', '2']
-print("\nMatch expected list?", word_list == expected)
+    # Removes common words and strings that do not indicate subjects, like "the" and file extensions.
+    word_list = remove_stop_words(word_list)
+
+    # Just for proof of concept: prints the result for using example_paths.txt as the input.
+    expected = ['formats', 'file', 'format', 'desktop', 'recommendations', '2022', 'held', 'trust', 'report', 'held',
+                'trust', 'report', '2']
+    print("\nMatch expected list?", word_list == expected)
