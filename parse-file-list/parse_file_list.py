@@ -14,14 +14,14 @@ import re
 import sys
 
 
-def row_to_list(doc):
+def doc_to_lines_list(doc):
     """Convert a text file into a list with one item (string) per row."""
     with open(doc) as doc_open:
         doc_list = doc_open.read().splitlines()
     return doc_list
 
 
-def path_to_list(row):
+def path_to_words_list(row):
     """Convert a path (string) to a list of words/strings."""
 
     # Splits on dashes, underscores, spaces, periods, and backslashes.
@@ -58,12 +58,12 @@ if __name__ == '__main__':
     skip_number = int(sys.argv[2])
 
     # Reads the text file into a list.
-    path_list = row_to_list(path_doc)
+    path_list = doc_to_lines_list(path_doc)
 
     # Splits each path into a list of words and adds them to the word list.
     word_list = []
     for path in path_list:
-        words = path_to_list(path)
+        words = path_to_words_list(path)
         word_list.extend(words)
 
     # Removes common words and strings that do not indicate subjects, like "the" and file extensions.
