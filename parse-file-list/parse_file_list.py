@@ -51,6 +51,20 @@ def remove_stop_words(list_words):
     return reduced_words
 
 
+def test_result():
+    """For the proof of concept, test that input of example_paths.txt with 3 skip words gives the expected result."""
+
+    expected = ['formats', 'file', 'format', 'desktop', 'recommendations', '2022', 'held', 'trust', 'report', 'held',
+                'trust', 'report', '2']
+    result_match = word_list == expected
+
+    if result_match is True:
+        print("\nSuccess!")
+    else:
+        print("\nResults were not as expected. Result of the script:")
+        print(word_list)
+
+
 def word_list(paths):
     """Convert a list of paths to a list of words."""
 
@@ -77,7 +91,5 @@ if __name__ == '__main__':
     # Converts the path list into a list of words.
     word_list = word_list(path_list)
 
-    # Just for proof of concept: prints the result for using example_paths.txt as the input.
-    expected = ['formats', 'file', 'format', 'desktop', 'recommendations', '2022', 'held', 'trust', 'report', 'held',
-                'trust', 'report', '2']
-    print("\nMatch expected list?", word_list == expected)
+    # Test that example_paths.txt gave the expected output.
+    test_result()
