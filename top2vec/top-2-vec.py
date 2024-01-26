@@ -1,3 +1,5 @@
+# Copy of example from YouTube tutorial by Dr. W.J.B. Mattingly
+
 import pandas as pd
 from top2vec import Top2Vec
 
@@ -28,4 +30,3 @@ for doc, score, doc_id in zip(documents, document_scores, document_ids):
     print(f"Document: {doc_id}, Score: {score}")
     print(doc)
     print()
-    
