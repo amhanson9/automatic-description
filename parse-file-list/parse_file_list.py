@@ -14,14 +14,14 @@ import re
 import sys
 
 
-def row_to_list(doc):
+def doc_to_lines_list(doc):
     """Convert a text file into a list with one item (string) per row."""
     with open(doc) as doc_open:
         doc_list = doc_open.read().splitlines()
     return doc_list
 
 
-def path_to_list(row):
+def path_to_words_list(row):
     """Convert a path (string) to a list of words/strings."""
 
     # Splits on dashes, underscores, spaces, periods, and backslashes.
@@ -51,23 +51,45 @@ def remove_stop_words(list_words):
     return reduced_words
 
 
-# Assigns script arguments to variables.
-path_doc = sys.argv[1]
-skip_number = int(sys.argv[2])
+def test_result():
+    """For the proof of concept, test that input of example_paths.txt with 3 skip words gives the expected result."""
 
-# Reads the text file into a list.
-path_list = row_to_list(path_doc)
+    expected = ['formats', 'file', 'format', 'desktop', 'recommendations', '2022', 'held', 'trust', 'report', 'held',
+                'trust', 'report', '2']
+    result_match = word_list == expected
 
-# Splits each path into a list of words and adds them to the word list.
-word_list = []
-for path in path_list:
-    words = path_to_list(path)
-    word_list.extend(words)
+    if result_match is True:
+        print("\nSuccess!")
+    else:
+        print("\nResults were not as expected. Result of the script:")
+        print(word_list)
 
-# Removes common words and strings that do not indicate subjects, like "the" and file extensions.
-word_list = remove_stop_words(word_list)
 
-# Just for proof of concept: prints the result for using example_paths.txt as the input.
-expected = ['formats', 'file', 'format', 'desktop', 'recommendations', '2022', 'held', 'trust', 'report', 'held',
-            'trust', 'report', '2']
-print("\nMatch expected list?", word_list == expected)
+def word_list(paths):
+    """Convert a list of paths to a list of words."""
+
+    # Splits each path into a list of words and adds them to the word list.
+    words = []
+    for path in paths:
+        path_words = path_to_words_list(path)
+        words.extend(path_words)
+
+    # Removes common words and strings that do not indicate subjects, like "the" and file extensions.
+    words = remove_stop_words(words)
+    return words
+
+
+if __name__ == '__main__':
+
+    # Assigns script arguments to variables.
+    path_doc = sys.argv[1]
+    skip_number = int(sys.argv[2])
+
+    # Reads the text file into a list.
+    path_list = doc_to_lines_list(path_doc)
+
+    # Converts the path list into a list of words.
+    word_list = word_list(path_list)
+
+    # Test that example_paths.txt gave the expected output.
+    test_result()
