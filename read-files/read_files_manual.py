@@ -23,15 +23,14 @@ def read(ext):
     """Try to read the contents of a file based on its file extension and return as a list of words"""
     if ext == "docx":
         text = read_docx(file_path)
-        return text
     elif ext == "pdf":
         text = read_pdf(file_path)
-        return text
     elif ext == "txt":
         text = read_txt(file_path)
-        return text
     else:
-        return None
+        text = None
+
+    return text
 
 
 def read_docx(path):
@@ -91,7 +90,7 @@ def text_to_clean_list(text_string):
 
 
 if __name__ == '__main__':
-    
+
     # Assigns script argument to a variable
     input_directory = sys.argv[1]
 
