@@ -7,3 +7,4 @@ gensim~=4.3.2
 spacy~=3.7.2
 pyLDAvis~=3.4.0
 nlp~=0.4.0
+docx2txt~=0.8
