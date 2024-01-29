@@ -79,12 +79,14 @@ def text_to_clean_list(text_string):
 
     # TODO: remove stop words and any other cleanup.
     text_string = text_string.replace(".", "")
+    text_string = text_string.replace(",", "")
 
     # Make all characters lowercase.
     text_string = text_string.lower()
 
-    # Split the string at spaces.
+    # Make a list of words by splitting the string at spaces and removing empty strings.
     text_list = text_string.split(" ")
+    text_list = [x for x in text_list if x]
     return text_list
 
 
