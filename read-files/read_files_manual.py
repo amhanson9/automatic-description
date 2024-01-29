@@ -90,26 +90,28 @@ def text_to_clean_list(text_string):
     return text_list
 
 
-# Assigns script argument to a variable
-input_directory = sys.argv[1]
+if __name__ == '__main__':
+    
+    # Assigns script argument to a variable
+    input_directory = sys.argv[1]
 
-# Starts variables for the text that is read and total number of texts.
-full_text = []
-number_texts = 0
+    # Starts variables for the text that is read and total number of texts.
+    full_text = []
+    number_texts = 0
 
-# Gets the path to each file in the input directory.
-for root, dirs, files in os.walk(input_directory):
-    number_texts += len(files)
-    for file in files:
-        file_path = os.path.join(root, file)
+    # Gets the path to each file in the input directory.
+    for root, dirs, files in os.walk(input_directory):
+        number_texts += len(files)
+        for file in files:
+            file_path = os.path.join(root, file)
 
-        # Gets the file extension and tries to read based on the extension.
-        extension = get_extension(file_path)
-        file_text = read(extension)
-        if file_text:
-            full_text.append(file_text)
+            # Gets the file extension and tries to read based on the extension.
+            extension = get_extension(file_path)
+            file_text = read(extension)
+            if file_text:
+                full_text.append(file_text)
 
-# Calculates and prints the success rate of reading the files.
-success_rate(len(full_text), number_texts)
+    # Calculates and prints the success rate of reading the files.
+    success_rate(len(full_text), number_texts)
 
-print(full_text)
+    print(full_text)
