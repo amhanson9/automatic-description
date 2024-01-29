@@ -45,12 +45,11 @@ def read_txt(path):
     return text_list
 
 
-def success_rate(success, failure):
+def success_rate(success, total):
     """Calculate and print the number, and percent, of files that could be read."""
-    total_files = success + failure
-    percent_success = round((read_true / total_files) * 100, 2)
+    percent_success = round((success / total) * 100, 2)
     print("\nSuccess rate for reading the documents:")
-    print(f"{read_true} files out of {total_files} read ({percent_success}%)")
+    print(f"{success} files out of {total} read ({percent_success}%)")
 
 
 def text_to_clean_list(text_string):
@@ -77,15 +76,13 @@ def text_to_clean_list(text_string):
 # Assigns script argument to a variable
 input_directory = sys.argv[1]
 
-# Starts a variable for the text that is read.
+# Starts variables for the text that is read and total number of texts.
 full_text = []
-
-# Starts variables for calculating the success rate of reading the files.
-read_true = 0
-read_false = 0
+number_texts = 0
 
 # Gets the path to each file in the input directory.
 for root, dirs, files in os.walk(input_directory):
+    number_texts += len(files)
     for file in files:
         file_path = os.path.join(root, file)
 
@@ -94,11 +91,8 @@ for root, dirs, files in os.walk(input_directory):
         file_text = read(extension)
         if file_text:
             full_text.append(file_text)
-            read_true += 1
-        else:
-            read_false += 1
 
 # Calculates and prints the success rate of reading the files.
-success_rate(read_true, read_false)
+success_rate(len(full_text), number_texts)
 
 print(full_text)
