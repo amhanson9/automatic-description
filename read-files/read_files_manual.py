@@ -7,6 +7,7 @@ Parameters:
 """
 import os
 import docx2txt
+from PyPDF2 import PdfReader
 import sys
 
 
@@ -23,6 +24,9 @@ def read(ext):
     if ext == "docx":
         text = read_docx(file_path)
         return text
+    elif ext == "pdf":
+        text = read_pdf(file_path)
+        return text
     elif ext == "txt":
         text = read_txt(file_path)
         return text
@@ -31,14 +35,25 @@ def read(ext):
 
 
 def read_docx(path):
-    """Read the contents of docx files into a list of words and return"""
+    """Read the contents of a docx file into a list of words and return"""
     text = docx2txt.process(path)
     text_list = text_to_clean_list(text)
     return text_list
 
 
+def read_pdf(path):
+    """Read the contents of a pdf file into a list of words and return"""
+    text = ""
+    reader = PdfReader(path)
+    for page in reader.pages:
+        page_text = page.extract_text()
+        text += (" " + page_text)
+    text_list = text_to_clean_list(text)
+    return text_list
+
+
 def read_txt(path):
-    """Read the contents of txt files into a list of words and return"""
+    """Read the contents of a txt file into a list of words and return"""
     with open(path) as f:
         text = f.read()
     text_list = text_to_clean_list(text)
