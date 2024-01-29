@@ -18,25 +18,19 @@ def read_file(path):
     text = None
     read_error = False
 
-    # For problem solving, prints the path it is working on.
-    # Will also print encountered errors.
-    print("\nNext file path is:", path)
-
     # If it works as expected, on a format that it can read.
     try:
         text = textract.process(path)
-        print(text)
-        # print("Success!")
+        text = text.decode("utf-8")
 
     # If it works as expected, on a format that it cannot read.
     except (ModuleNotFoundError, re.error):
         read_error = True
-        # print("Can't read this format - Expected.")
 
     # Some formats (currently doc and pdf) are not working and should be.
     except (FileNotFoundError, textract.exceptions.ShellError):
         read_error = True
-        # print("Can't find the file")
+        print("Can't find the file")
 
     return text, read_error
 
@@ -53,7 +47,7 @@ def success_rate(success, failure):
 input_directory = sys.argv[1]
 
 # Starts a variable for the text that is read.
-full_text = None
+full_text = []
 
 # Starts variables for calculating the success rate of reading the files.
 read_true = 0
@@ -63,12 +57,12 @@ read_false = 0
 for root, dirs, files in os.walk(input_directory):
     for file in files:
         file_path = os.path.join(root, file)
-
         # Reads the file and updates the read count.
         file_text, file_read_error = read_file(file_path)
         if file_read_error:
             read_false += 1
         else:
+            full_text.append(file_text)
             read_true += 1
 
 # Calculates and prints the success rate of reading the files.
