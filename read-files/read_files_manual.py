@@ -9,6 +9,14 @@ import os
 import sys
 
 
+def get_extension(path):
+    """Calculate and return the lowercase version of the file extension."""
+    path_list = path.split(".")
+    ext = path_list[-1]
+    ext_lower = ext.lower()
+    return ext_lower
+
+
 def success_rate(success, failure):
     """Calculate and print the number, and percent, of files that could be read."""
     total_files = success + failure
@@ -31,8 +39,10 @@ read_false = 0
 for root, dirs, files in os.walk(input_directory):
     for file in files:
         file_path = os.path.join(root, file)
+        print("Path is:", file_path)
 
         # Gets the file extension to determine which library to use.
+        extension = get_extension(file_path)
 
         # Reads the file, if there is a library for that function, and updates the read count.
 
