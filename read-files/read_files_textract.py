@@ -1,6 +1,6 @@
-"""Experiment with reading the contents of files into Python for topical analysis
+"""Experiment with reading the contents of files into Python for topical analysis using textract library
 
-For testing, want to read plain text, Microsoft Word, and PDF.
+For testing, want to read plain text, Microsoft Word (doc and docx), and PDF.
 
 Parameters:
     input_directory (required): path to folder with files
