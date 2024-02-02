@@ -1,7 +1,7 @@
 """Experiment with reading the contents of files into Python for topical analysis using the tika library
 
 For testing, want to read plain text, Microsoft Word (doc and docx), and PDF.
-Also including another file (.xps) that don't expect to be read by the script.
+Also including another file (.xps) that don't expect to be read by the script, but Tika could read it.
 
 Parameter:
     input_directory (required): path to folder with files
@@ -13,7 +13,7 @@ import os
 import pandas as pd
 import re
 import sys
-import tika
+from tika import parser
 
 
 def read(path):
@@ -25,7 +25,10 @@ def read(path):
     :return
         A list with the words, after cleanup, in the file
     """
-    return "text_list"
+    parsed = parser.from_file(path)
+    text = parsed['content']
+    text_list = text_to_clean_list(text)
+    return text_list
 
 
 def success_rate(success, total):
@@ -46,15 +49,16 @@ def success_rate(success, total):
 def test_result():
     """For the proof of concept, test that test_input_directory gives the expected result."""
     expected = [['test', 'file', 'text', 'test', 'test', 'test'],
+                ['file', 'skipped', '/docprops/thumbnailjpeg'],
                 ['word', 'test', 'file', 'word', 'word', 'word', 'word', 'word'],
                 ['another', 'word', 'test', 'file', 'test', 'file', 'test', 'file'],
-                ['multiple', 'page', 'pd', 'f', 'page', '1',
+                ['multiple', 'page', 'page', '1',
                  'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
                  'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
                  'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
                  'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
                  'multiple', 'page', 'page', '2', 'line', 'text', 'line', 'text', 'line', 'text'],
-                ['first', 't', 'est', 'one', 'one', 'one', 'one', 'one', 'one'],
+                ['first', 'test', 'one', 'one', 'one', 'one', 'one', 'one'],
                 ['second', 'test', 'file', 'two', 'two', 'two', 'two', 'two', 'two'],
                 ['test', 'file', 'text', 'test', 'test', 'test']]
     result_match = full_text == expected
@@ -84,7 +88,7 @@ def text_to_clean_list(text_string):
 
     # Removes punctuation and other non-word characters to reduce the variation of words.
     # These cannot be removed as stop words because they are not entire words.
-    remove_characters = ['.', '!', '?', ',', ';']
+    remove_characters = ['.', '!', '?', ',', ';', '\r', '\t']
     for character in remove_characters:
         text_string = text_string.replace(character, '')
 
