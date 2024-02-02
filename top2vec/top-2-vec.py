@@ -1,4 +1,9 @@
-# Copy of example from YouTube tutorial by Dr. W.J.B. Mattingly
+"""
+Copy of example from YouTube tutorial by Dr. W.J.B.
+https://www.youtube.com/watch?v=bEaxKSQ4Av8
+
+Not able to get top2vec to install. Error: failed building wheel for hdbscan
+"""
 
 import pandas as pd
 from top2vec import Top2Vec
@@ -7,16 +12,16 @@ from top2vec import Top2Vec
 df = pd.read_json("path/input.json")
 
 # "descriptions" is a column in the dataframe in the example.
-# It is a list of strings.
+# Make it a list of strings.
 docs = df.descriptions.tolist()
 
-# Cleans data, makes vectors, and finds topics efficiently.
+# Cleans data, makes vector representation for each document, and finds the topics.
 model = Top2Vec(docs)
 
-# How many documents in each topic, and how many total topics.
+# Gets the number of documents in each topic (topic_sizes), and the number of topics.
 topic_sizes, topic_nums = model.get_topic_sizes()
 
-# Most common words for the 10 most common topics.
+# Gets the most common words for the 10 most common topics. Topics are in order by doc count.
 # Zip is a way to iterate over more than one list at a time.
 topic_words, word_scores, topic_nums = model.get_topics(10)
 for words, num in zip(topic_words, topic_nums):
