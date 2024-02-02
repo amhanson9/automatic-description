@@ -22,14 +22,14 @@ import sys
 def get_extension(path):
     """Calculate the lowercase version of the file extension
 
-    Parameter:
+    :parameter
         path : path to a file (string)
 
-    Returns:
+    :return
         Lowercase version of the file extension (string)
         If there is no extension and no period in the path, it returns the entire path
     """
-    path_list = path.split(".")
+    path_list = path.split('.')
     ext = path_list[-1]
     ext_lower = ext.lower()
     return ext_lower
@@ -38,20 +38,20 @@ def get_extension(path):
 def read(path, ext):
     """Read the contents of a file by calling another function based on its file extension
 
-     Parameters:
+     :parameter
          path : path to a file (string)
          ext : lowercase extension of the file (string)
 
-     Returns:
+     :return
          A list with the words, after cleanup, in the file or None if there is no library to read that extension
     """
-    if ext == "doc":
+    if ext == 'doc':
         text_list = read_doc(path)
-    elif ext == "docx":
+    elif ext == 'docx':
         text_list = read_docx(path)
-    elif ext == "pdf":
+    elif ext == 'pdf':
         text_list = read_pdf(path)
-    elif ext == "txt":
+    elif ext == 'txt':
         text_list = read_txt(path)
     else:
         text_list = None
@@ -64,14 +64,14 @@ def read_doc(path):
 
     Temporarily making a .docx version because the methods for reading .doc are less well supported.
 
-    Parameter:
+    :parameter
         path : path to a file (string)
 
-    Returns:
+    :return
         A list with the words, after cleanup, in the file
     """
     convert(path)
-    new_path = path + "x"
+    new_path = path + 'x'
     text = docx2txt.process(new_path)
     text_list = text_to_clean_list(text)
     os.remove(new_path)
@@ -81,13 +81,12 @@ def read_doc(path):
 def read_docx(path):
     """Read the contents of a file with a .docx extension and convert to a list by calling another function
 
-    Parameter:
+    :parameter
         path : path to a file (string)
 
-    Returns:
+    :return
         A list with the words, after cleanup, in the file
     """
-
     text = docx2txt.process(path)
     text_list = text_to_clean_list(text)
     return text_list
@@ -96,18 +95,17 @@ def read_docx(path):
 def read_pdf(path):
     """Read the contents of a file with a .pdf file extension and convert to a list by calling another function
 
-    Parameter:
+    :parameter
         path : path to a file (string)
 
-    Returns:
+    :return
         A list with the words, after cleanup, in the file
     """
-
-    text = ""
+    text = ''
     reader = PdfReader(path)
     for page in reader.pages:
         page_text = page.extract_text()
-        text += (" " + page_text)
+        text += (' ' + page_text)
     text_list = text_to_clean_list(text)
     return text_list
 
@@ -115,13 +113,12 @@ def read_pdf(path):
 def read_txt(path):
     """Read the contents of file with a .txt file extension and convert to a list by calling another function
 
-    Parameter:
+    :parameter
         path : path to a file (string)
 
-    Returns:
+    :return
         A list with the words, after cleanup in the file
     """
-
     with open(path) as f:
         text = f.read()
     text_list = text_to_clean_list(text)
@@ -131,14 +128,13 @@ def read_txt(path):
 def success_rate(success, total):
     """Calculate the number, and percent, of files that could be read and prints the result
 
-    Parameters:
+    :parameter
         success : number of files with text in the full_text list (integer)
         total : number of files in the input directory (integer)
 
-    Returns:
+    :return
         None
     """
-
     percent_success = round((success / total) * 100, 2)
     print("\nSuccess rate for reading the documents:")
     print(f"{success} files out of {total} read ({percent_success}%)")
@@ -146,7 +142,6 @@ def success_rate(success, total):
 
 def test_result():
     """For the proof of concept, test that test_input_directory gives the expected result."""
-
     expected = [['test', 'file', 'text', 'test', 'test', 'test'],
                 ['word', 'test', 'file', 'word', 'word', 'word', 'word', 'word'],
                 ['another', 'word', 'test', 'file', 'test', 'file', 'test', 'file'],
@@ -181,7 +176,6 @@ def text_to_clean_list(text_string):
     Returns:
         List of words, lowercase and without stop words
     """
-
     # Makes all characters lowercase.
     text_string = text_string.lower()
 
@@ -189,10 +183,10 @@ def text_to_clean_list(text_string):
     # These cannot be removed as stop words because they are not entire words.
     remove_characters = ['.', '!', '?', ',', ';']
     for character in remove_characters:
-        text_string = text_string.replace(character, "")
+        text_string = text_string.replace(character, '')
 
     # Makes a list of words by splitting the string at spaces and newlines, and then removing empty strings.
-    text_list = re.split("[\n ]", text_string)
+    text_list = re.split('[\n ]', text_string)
     text_list = [x for x in text_list if x]
 
     # Reads a CSV of default words to remove that do not indicate subjects, like "the", into a list.
