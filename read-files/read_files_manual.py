@@ -122,6 +122,33 @@ def success_rate(success, total):
     print(f"{success} files out of {total} read ({percent_success}%)")
 
 
+def test_result():
+    """For the proof of concept, test that test_input_directory gives the expected result."""
+
+    expected = [['test', 'file', 'text', 'test', 'test', 'test'],
+                ['another', 'word', 'test', 'file', 'test', 'file', 'test', 'file'],
+                ['multiple', 'page', 'pd', 'f', 'page', '1',
+                 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
+                 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
+                 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
+                 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
+                 'multiple', 'page', 'page', '2', 'line', 'text', 'line', 'text', 'line', 'text'],
+                ['first', 't', 'est', 'one', 'one', 'one', 'one', 'one', 'one'],
+                ['second', 'test', 'file', 'two', 'two', 'two', 'two', 'two', 'two'],
+                ['test', 'file', 'text', 'test', 'test', 'test']]
+    result_match = full_text == expected
+
+    if result_match is True:
+        print("\nSuccess!")
+    else:
+        print("\nResults were not as expected. Texts that are not correct:")
+        for index, text in enumerate(full_text):
+            if not expected[index] == text:
+                print("\nIndex position", index)
+                print("Expected:", expected[index])
+                print("Result:  ", text)
+
+
 def text_to_clean_list(text_string):
     """Convert a string to a list of words, with some clean up
 
@@ -182,6 +209,5 @@ if __name__ == '__main__':
     # Calculates and prints the success rate of reading the files.
     success_rate(len(full_text), number_texts)
 
-    # For testing, prints the final result.
-    # In production, would need to save this information for a topical analysis script.
-    print(full_text)
+    # Test that test_input_directory gave the expected output.
+    test_result()
