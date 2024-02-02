@@ -12,7 +12,9 @@ Returns:
 """
 import os
 import docx2txt
+import pandas as pd
 from PyPDF2 import PdfReader
+import re
 import sys
 
 
@@ -130,24 +132,30 @@ def text_to_clean_list(text_string):
         List of words, lowercase and without stop words
     """
 
-    # Replace new lines with spaces.
-    text_string = text_string.replace("\n", " ")
-
-    # Replace multiple consecutive spaces with a single space.
-    while "  " in text_string:
-        text_string = text_string.replace("  ", " ")
-
-    # TODO: remove stop words and any other cleanup.
-    text_string = text_string.replace(".", "")
-    text_string = text_string.replace(",", "")
-
-    # Make all characters lowercase.
+    # Makes all characters lowercase.
     text_string = text_string.lower()
 
-    # Make a list of words by splitting the string at spaces and removing empty strings.
-    text_list = text_string.split(" ")
+    # Removes punctuation and other non-word characters to reduce the variation of words.
+    # These cannot be removed as stop words because they are not entire words.
+    remove_characters = ['.', '!', '?', ',', ';']
+    for character in remove_characters:
+        text_string = text_string.replace(character, "")
+
+    # Makes a list of words by splitting the string at spaces and newlines, and then removing empty strings.
+    text_list = re.split("[\n ]", text_string)
     text_list = [x for x in text_list if x]
-    return text_list
+
+    # Reads a CSV of default words to remove that do not indicate subjects, like "the", into a list.
+    df = pd.read_csv(os.path.join(os.getcwd(), '..', 'parse-file-list', 'stop_list.csv'))
+    stop_words = df['Term'].to_list()
+
+    # Makes a list of every word in text_list that is not in stop_words.
+    clean_text_list = []
+    for word in text_list:
+        if word not in stop_words:
+            clean_text_list.append(word)
+
+    return clean_text_list
 
 
 if __name__ == '__main__':
