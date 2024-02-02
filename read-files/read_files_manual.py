@@ -10,6 +10,7 @@ Parameter:
 Returns:
     A list, with each item being another list of the words (cleaned up) for a single document.
 """
+from doc2docx import convert
 import os
 import docx2txt
 import pandas as pd
@@ -44,7 +45,9 @@ def read(path, ext):
      Returns:
          A list with the words, after cleanup, in the file or None if there is no library to read that extension
     """
-    if ext == "docx":
+    if ext == "doc":
+        text_list = read_doc(path)
+    elif ext == "docx":
         text_list = read_docx(path)
     elif ext == "pdf":
         text_list = read_pdf(path)
@@ -53,6 +56,25 @@ def read(path, ext):
     else:
         text_list = None
 
+    return text_list
+
+
+def read_doc(path):
+    """Read the contents of a file with a .doc extension and convert to a list by calling another function
+
+    Temporarily making a .docx version because the methods for reading .doc are less well supported.
+
+    Parameter:
+        path : path to a file (string)
+
+    Returns:
+        A list with the words, after cleanup, in the file
+    """
+    convert(path)
+    new_path = path + "x"
+    text = docx2txt.process(new_path)
+    text_list = text_to_clean_list(text)
+    os.remove(new_path)
     return text_list
 
 
@@ -126,6 +148,7 @@ def test_result():
     """For the proof of concept, test that test_input_directory gives the expected result."""
 
     expected = [['test', 'file', 'text', 'test', 'test', 'test'],
+                ['word', 'test', 'file', 'word', 'word', 'word', 'word', 'word'],
                 ['another', 'word', 'test', 'file', 'test', 'file', 'test', 'file'],
                 ['multiple', 'page', 'pd', 'f', 'page', '1',
                  'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
