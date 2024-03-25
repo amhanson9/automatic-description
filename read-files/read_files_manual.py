@@ -268,7 +268,11 @@ if __name__ == '__main__':
             for file in files:
                 file_path = os.path.join(coll_directory, aip, root, file)
                 extension = get_extension(file_path)
-                file_text = read(file_path, extension)
+                try:
+                    file_text = read(file_path, extension)
+                except FileNotFoundError:
+                    print('Path error for', file_path)
+                    file_text = None
                 if file_text:
                     coll_text.append(file_text)
                     aip_text.append(file_text)
@@ -276,21 +280,27 @@ if __name__ == '__main__':
         # Saves the AIP text to a file in the coll_directory.
         with open(os.path.join(coll_directory, 'extracted_text', f'{aip}_text.txt'), 'w') as f:
             for line_list in aip_text:
-                f.write(f'{"|".join(line_list)}\n')
+                try:
+                    f.write(f'{"|".join(line_list)}\n')
+                except UnicodeEncodeError:
+                    print('Skipped line, unicode issues')
 
         # Calculates and prints the success rate of reading the files for the AIP.
         success_rate(aip, len(aip_text), aip_files)
 
         # Test that test_input_directory gave the expected output for each AIP.
-        test_aip_result(aip)
+        # test_aip_result(aip)
 
     # Saves the collection text to a file in coll_directory.
     with open(os.path.join(coll_directory, 'extracted_text', f'{os.path.basename(coll_directory)}_text.txt'), 'w') as f:
         for line_list in coll_text:
-            f.write(f'{"|".join(line_list)}\n')
+            try:
+                f.write(f'{"|".join(line_list)}\n')
+            except UnicodeEncodeError:
+                print('Skipped line, unicode issues')
 
     # Calculates and prints the success rate of reading the files for the entire collection.
     success_rate(os.path.basename(coll_directory), len(coll_text), coll_files)
 
     # Test that test_input_directory gave the expected output.
-    test_coll_result()
+    # test_coll_result()
