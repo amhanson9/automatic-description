@@ -41,10 +41,11 @@ def save_text(id, text_list):
                 print('Skipped line, unicode issues')
 
 
-def success_rate(success, total):
+def success_rate(folder, success, total):
     """Calculate the number, and percent, of files that could be read and prints the result
 
     :parameter
+        folder : name of the folder the success rate applies to (string)
         success : number of files with text in the full_text list (integer)
         total : number of files in the input directory (integer)
 
@@ -52,7 +53,7 @@ def success_rate(success, total):
         None
     """
     percent_success = round((success / total) * 100, 2)
-    print("\nSuccess rate for reading the documents:")
+    print(f"\nSuccess rate for {folder}:")
     print(f"{success} files out of {total} read ({percent_success}%)")
 
 
@@ -157,11 +158,14 @@ if __name__ == '__main__':
         # Saves the AIP text to a file in coll_directory.
         save_text(aip, aip_text)
 
+        # Calculates and prints the success rate of reading the files for the AIP.
+        success_rate(aip, len(aip_text), aip_files)
+
     # Saves the collection text to a file in coll_directory.
     save_text(os.path.basename(coll_directory), coll_text)
 
-    # Calculates and prints the success rate of reading the files.
-    success_rate(len(coll_text), coll_files)
+    # Calculates and prints the success rate of reading the files for the entire collection.
+    success_rate(os.path.basename(coll_directory), len(coll_text), coll_files)
 
     # Test that test_input_directory gave the expected output.
     # test_result()
