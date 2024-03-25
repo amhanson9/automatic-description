@@ -22,17 +22,15 @@ def read_file(path):
         text = textract.process(path)
         text = text.decode("utf-8")
         text = text_to_clean_list(text)
-    except:
-        print('Problem with reading', path)
-
-    # # If it works as expected, on a format that it cannot read.
-    # except (ModuleNotFoundError, re.error):
-    #     read_error = True
-    #
-    # # Some formats (currently doc and pdf) are not working and should be.
-    # except (FileNotFoundError, textract.exceptions.ShellError):
-    #     read_error = True
-    #     print("Can't find the file")
+    # If it works as expected, on a format that it cannot read.
+    except (ModuleNotFoundError, re.error):
+        print('Format cannot be read', path)
+    # Unicode errors: solution tbd
+    except UnicodeDecodeError:
+        print('Unicode error', path)
+    # Some formats (currently doc and pdf) are not working and should be.
+    except (FileNotFoundError, textract.exceptions.ShellError):
+        print('Path error', path)
 
     return text
 
