@@ -5,7 +5,7 @@ For testing, reading plain text, Microsoft Word (doc and docx), and PDF.
 Also including another file (.xps) that cannot be read by the script.
 
 Parameter:
-    input_directory (required): path to folder with files
+    coll_directory (required): path to folder for a collection, which contains AIP folders
 
 Returns:
     A list, with each item being another list of the words (cleaned up) for a single document.
@@ -125,7 +125,7 @@ def read_txt(path):
     return text_list
 
 
-def success_rate(success, total):
+def success_rate(folder, success, total):
     """Calculate the number, and percent, of files that could be read and prints the result
 
     :parameter
@@ -136,14 +136,46 @@ def success_rate(success, total):
         None
     """
     percent_success = round((success / total) * 100, 2)
-    print("\nSuccess rate for reading the documents:")
+    print(f"\nSuccess rate for {folder}:")
     print(f"{success} files out of {total} read ({percent_success}%)")
 
 
-def test_result():
-    """For the proof of concept, test that test_input_directory gives the expected result."""
-    expected = [['test', 'file', 'text', 'test', 'test', 'test'],
-                ['word', 'test', 'file', 'word', 'word', 'word', 'word', 'word'],
+def test_aip_result(aip_folder):
+    """For the proof of concept, test that test_input_directory gives the expected aip-level result."""
+    # Test for Folder One.
+    if aip == 'Folder One':
+        expected = [['word', 'test', 'file', 'word', 'word', 'word', 'word', 'word'],
+                    ['another', 'word', 'test', 'file', 'test', 'file', 'test', 'file']]
+        result_match = aip_text == expected
+
+    # Test for Folder Two.
+    else:
+        expected = [['multiple', 'page', 'pd', 'f', 'page', '1',
+                     'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
+                     'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
+                     'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
+                     'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
+                     'multiple', 'page', 'page', '2', 'line', 'text', 'line', 'text', 'line', 'text'],
+                    ['first', 't', 'est', 'one', 'one', 'one', 'one', 'one', 'one'],
+                    ['second', 'test', 'file', 'two', 'two', 'two', 'two', 'two', 'two'],
+                    ['test', 'file', 'text', 'test', 'test', 'test']]
+        result_match = aip_text == expected
+
+    # Print test result, regardless of which AIP.
+    if result_match is True:
+        print(f"\nAIP {aip_folder} result is Correct!")
+    else:
+        print("\nResults were not as expected. Texts that are not correct:")
+        for index, text in enumerate(aip_text):
+            if not expected[index] == text:
+                print("\nIndex position", index)
+                print("Expected:", expected[index])
+                print("Result:  ", text)
+
+
+def test_coll_result():
+    """For the proof of concept, test that test_input_directory gives the expected collection-level result."""
+    expected = [['word', 'test', 'file', 'word', 'word', 'word', 'word', 'word'],
                 ['another', 'word', 'test', 'file', 'test', 'file', 'test', 'file'],
                 ['multiple', 'page', 'pd', 'f', 'page', '1',
                  'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text', 'line', 'text',
@@ -154,13 +186,13 @@ def test_result():
                 ['first', 't', 'est', 'one', 'one', 'one', 'one', 'one', 'one'],
                 ['second', 'test', 'file', 'two', 'two', 'two', 'two', 'two', 'two'],
                 ['test', 'file', 'text', 'test', 'test', 'test']]
-    result_match = full_text == expected
+    result_match = coll_text == expected
 
     if result_match is True:
-        print("\nSuccess!")
+        print("\nCollection Result is Correct!")
     else:
         print("\nResults were not as expected. Texts that are not correct:")
-        for index, text in enumerate(full_text):
+        for index, text in enumerate(coll_text):
             if not expected[index] == text:
                 print("\nIndex position", index)
                 print("Expected:", expected[index])
@@ -205,26 +237,41 @@ def text_to_clean_list(text_string):
 if __name__ == '__main__':
 
     # Assigns script argument to a variable
-    input_directory = sys.argv[1]
+    coll_directory = sys.argv[1]
 
-    # Starts variables for the text that is read and total number of texts.
-    full_text = []
-    number_texts = 0
+    # Starts variables for reading every file in the collection directory.
+    coll_text = []
+    coll_files = 0
 
-    # Gets the path to each file in the input directory.
-    for root, dirs, files in os.walk(input_directory):
-        number_texts += len(files)
-        for file in files:
-            file_path = os.path.join(root, file)
+    # For each AIP (first level folder within coll_directory),
+    # finds and tries to read each file in that AIP.
+    for aip in os.listdir(coll_directory):
 
-            # Gets the file extension and tries to read based on the extension.
-            extension = get_extension(file_path)
-            file_text = read(file_path, extension)
-            if file_text:
-                full_text.append(file_text)
+        # Starts variables for reading every file in the AIP directory.
+        aip_text = []
+        aip_files = 0
 
-    # Calculates and prints the success rate of reading the files.
-    success_rate(len(full_text), number_texts)
+        for root, dirs, files in os.walk(os.path.join(coll_directory, aip)):
+            coll_files += len(files)
+            aip_files += len(files)
+
+            # Tries to read each file based on the extension.
+            for file in files:
+                file_path = os.path.join(coll_directory, aip, root, file)
+                extension = get_extension(file_path)
+                file_text = read(file_path, extension)
+                if file_text:
+                    coll_text.append(file_text)
+                    aip_text.append(file_text)
+
+        # Calculates and prints the success rate of reading the files for the AIP.
+        success_rate(aip, len(aip_text), aip_files)
+
+        # Test that test_input_directory gave the expected output for each AIP.
+        test_aip_result(aip)
+
+    # Calculates and prints the success rate of reading the files for the entire collection.
+    success_rate(os.path.basename(coll_directory), len(coll_text), coll_files)
 
     # Test that test_input_directory gave the expected output.
-    test_result()
+    test_coll_result()
