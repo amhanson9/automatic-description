@@ -252,8 +252,8 @@ if __name__ == '__main__':
     # finds and tries to read each file in that AIP.
     for aip in os.listdir(coll_directory):
 
-        # Skip the output folder.
-        if aip == 'extracted_text':
+        # Skip the output folders. During testing, each technique had a different output folder.
+        if aip.startswith('extracted_text'):
             continue
 
         # Starts variables for reading every file in the AIP directory.
