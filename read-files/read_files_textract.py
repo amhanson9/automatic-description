@@ -43,27 +43,28 @@ def success_rate(success, failure):
     print(f"{read_true} files out of {total_files} read ({percent_success}%)")
 
 
-# Assigns script argument to a variable
-input_directory = sys.argv[1]
+if __name__ == '__main__':
+    # Assigns script argument to a variable
+    input_directory = sys.argv[1]
 
-# Starts a variable for the text that is read.
-full_text = []
+    # Starts a variable for the text that is read.
+    full_text = []
 
-# Starts variables for calculating the success rate of reading the files.
-read_true = 0
-read_false = 0
+    # Starts variables for calculating the success rate of reading the files.
+    read_true = 0
+    read_false = 0
 
-# Gets the path to each file in the input directory.
-for root, dirs, files in os.walk(input_directory):
-    for file in files:
-        file_path = os.path.join(root, file)
-        # Reads the file and updates the read count.
-        file_text, file_read_error = read_file(file_path)
-        if file_read_error:
-            read_false += 1
-        else:
-            full_text.append(file_text)
-            read_true += 1
+    # Gets the path to each file in the input directory.
+    for root, dirs, files in os.walk(input_directory):
+        for file in files:
+            file_path = os.path.join(root, file)
+            # Reads the file and updates the read count.
+            file_text, file_read_error = read_file(file_path)
+            if file_read_error:
+                read_false += 1
+            else:
+                full_text.append(file_text)
+                read_true += 1
 
-# Calculates and prints the success rate of reading the files.
-success_rate(read_true, read_false)
+    # Calculates and prints the success rate of reading the files.
+    success_rate(read_true, read_false)
