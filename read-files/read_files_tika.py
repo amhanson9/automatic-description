@@ -48,8 +48,7 @@ def success_rate(success, total):
 
 def test_result():
     """For the proof of concept, test that test_input_directory gives the expected result."""
-    expected = [['test', 'file', 'text', 'test', 'test', 'test'],
-                ['file', 'skipped', '/docprops/thumbnailjpeg'],
+    expected = [['file', 'skipped', '/docprops/thumbnailjpeg'],
                 ['word', 'test', 'file', 'word', 'word', 'word', 'word', 'word'],
                 ['another', 'word', 'test', 'file', 'test', 'file', 'test', 'file'],
                 ['multiple', 'page', 'page', '1',
@@ -61,13 +60,13 @@ def test_result():
                 ['first', 'test', 'one', 'one', 'one', 'one', 'one', 'one'],
                 ['second', 'test', 'file', 'two', 'two', 'two', 'two', 'two', 'two'],
                 ['test', 'file', 'text', 'test', 'test', 'test']]
-    result_match = full_text == expected
+    result_match = coll_text == expected
 
     if result_match is True:
         print("\nSuccess!")
     else:
         print("\nResults were not as expected. Texts that are not correct:")
-        for index, text in enumerate(full_text):
+        for index, text in enumerate(coll_text):
             if not expected[index] == text:
                 print("\nIndex position", index)
                 print("Expected:", expected[index])
@@ -112,22 +111,40 @@ def text_to_clean_list(text_string):
 if __name__ == '__main__':
 
     # Assigns script argument to a variable
-    input_directory = sys.argv[1]
+    coll_directory = sys.argv[1]
 
-    # Starts variables for the text that is read and the total number of texts.
-    full_text = []
-    number_texts = 0
+    # Makes a folder for script output in the coll_directory, if it doesn't already exist.
+    # It is only likely to exist when running this script repeatedly for testing.
+    if not os.path.exists(os.path.join(coll_directory, 'extracted_text')):
+        os.mkdir(os.path.join(coll_directory, 'extracted_text'))
 
-    # Gets the path to each file in the input directory and reads the file.
-    for root, dirs, files in os.walk(input_directory):
-        number_texts += len(files)
-        for file in files:
-            file_path = os.path.join(root, file)
-            file_text = read(file_path)
-            full_text.append(file_text)
+    # Starts variables for reading every file in the collection directory.
+    coll_text = []
+    coll_files = 0
+
+    # For each AIP (first level folder within coll_directory),
+    # finds and tries to read each file in that AIP.
+    for aip in os.listdir(coll_directory):
+
+        # Skip the output folder.
+        if aip == 'extracted_text':
+            continue
+
+        # Starts variables for reading every file in the AIP directory.
+        aip_text = []
+        aip_files = 0
+
+        for root, dirs, files in os.walk(os.path.join(coll_directory, aip)):
+            coll_files += len(files)
+            aip_files += len(files)
+            for file in files:
+                file_path = os.path.join(coll_directory, aip, root, file)
+                file_text = read(file_path)
+                coll_text.append(file_text)
+                aip_text.append(file_text)
 
     # Calculates and prints the success rate of reading the files.
-    success_rate(len(full_text), number_texts)
+    success_rate(len(coll_text), coll_files)
 
     # Test that test_input_directory gave the expected output.
     test_result()
