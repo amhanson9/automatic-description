@@ -45,7 +45,7 @@ def success_rate(success, failure):
 
 if __name__ == '__main__':
     # Assigns script argument to a variable
-    input_directory = sys.argv[1]
+    coll_directory = sys.argv[1]
 
     # Starts a variable for the text that is read.
     full_text = []
@@ -54,17 +54,25 @@ if __name__ == '__main__':
     read_true = 0
     read_false = 0
 
-    # Gets the path to each file in the input directory.
-    for root, dirs, files in os.walk(input_directory):
-        for file in files:
-            file_path = os.path.join(root, file)
-            # Reads the file and updates the read count.
-            file_text, file_read_error = read_file(file_path)
-            if file_read_error:
-                read_false += 1
-            else:
-                full_text.append(file_text)
-                read_true += 1
+    # For each AIP (first level folder within coll_directory),
+    # finds and tries to read each file in that AIP.
+    for aip in os.listdir(coll_directory):
+
+        # Starts variables for reading every file in the AIP directory.
+        aip_text = []
+        aip_files = 0
+
+        # Gets the path to each file in the input directory.
+        for root, dirs, files in os.walk(os.path.join(coll_directory, aip)):
+            for file in files:
+                file_path = os.path.join(coll_directory, aip, root, file)
+                # Reads the file and updates the read count.
+                file_text, file_read_error = read_file(file_path)
+                if file_read_error:
+                    read_false += 1
+                else:
+                    full_text.append(file_text)
+                    read_true += 1
 
     # Calculates and prints the success rate of reading the files.
     success_rate(read_true, read_false)
