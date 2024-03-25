@@ -13,6 +13,7 @@ import os
 import pandas as pd
 import re
 import sys
+import time
 from tika import parser
 
 
@@ -27,6 +28,7 @@ def read(path):
     """
     parsed = parser.from_file(path)
     text = parsed['content']
+    time.sleep(10)
     # If the format cannot be read, text is none.
     if text:
         text_list = text_to_clean_list(text)
