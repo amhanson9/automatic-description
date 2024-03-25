@@ -239,6 +239,11 @@ if __name__ == '__main__':
     # Assigns script argument to a variable
     coll_directory = sys.argv[1]
 
+    # Makes a folder for script output in the coll_directory, if it doesn't already exist.
+    # It is only likely to exist when running this script repeatedly for testing.
+    if not os.path.exists(os.path.join(coll_directory, 'extracted_text')):
+        os.mkdir(os.path.join(coll_directory, 'extracted_text'))
+
     # Starts variables for reading every file in the collection directory.
     coll_text = []
     coll_files = 0
@@ -246,6 +251,10 @@ if __name__ == '__main__':
     # For each AIP (first level folder within coll_directory),
     # finds and tries to read each file in that AIP.
     for aip in os.listdir(coll_directory):
+
+        # Skip the output folder.
+        if aip == 'extracted_text':
+            continue
 
         # Starts variables for reading every file in the AIP directory.
         aip_text = []
@@ -264,11 +273,21 @@ if __name__ == '__main__':
                     coll_text.append(file_text)
                     aip_text.append(file_text)
 
+        # Saves the AIP text to a file in the coll_directory.
+        with open(os.path.join(coll_directory, 'extracted_text', f'{aip}_text.txt'), 'w') as f:
+            for line_list in aip_text:
+                f.write(f'{"|".join(line_list)}\n')
+
         # Calculates and prints the success rate of reading the files for the AIP.
         success_rate(aip, len(aip_text), aip_files)
 
         # Test that test_input_directory gave the expected output for each AIP.
         test_aip_result(aip)
+
+    # Saves the collection text to a file in coll_directory.
+    with open(os.path.join(coll_directory, 'extracted_text', f'{os.path.basename(coll_directory)}_text.txt'), 'w') as f:
+        for line_list in coll_text:
+            f.write(f'{"|".join(line_list)}\n')
 
     # Calculates and prints the success rate of reading the files for the entire collection.
     success_rate(os.path.basename(coll_directory), len(coll_text), coll_files)
