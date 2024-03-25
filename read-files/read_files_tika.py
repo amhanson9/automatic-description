@@ -27,8 +27,12 @@ def read(path):
     """
     parsed = parser.from_file(path)
     text = parsed['content']
-    text_list = text_to_clean_list(text)
-    return text_list
+    # If the format cannot be read, text is none.
+    if text:
+        text_list = text_to_clean_list(text)
+        return text_list
+    else:
+        return None
 
 
 def save_text(id, text_list):
@@ -152,8 +156,9 @@ if __name__ == '__main__':
             for file in files:
                 file_path = os.path.join(coll_directory, aip, root, file)
                 file_text = read(file_path)
-                coll_text.append(file_text)
-                aip_text.append(file_text)
+                if file_text:
+                    coll_text.append(file_text)
+                    aip_text.append(file_text)
 
         # Saves the AIP text to a file in coll_directory.
         save_text(aip, aip_text)
