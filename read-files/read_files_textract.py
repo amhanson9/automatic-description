@@ -35,6 +35,16 @@ def read_file(path):
     return text, read_error
 
 
+def save_text(id, text_list):
+    """Save the text to a text file for later analysis, with one line for each document's words"""
+    with open(os.path.join(coll_directory, 'extracted_text', f'{id}_text.txt'), 'w') as f:
+        for line_list in text_list:
+            try:
+                f.write(f'{"|".join(line_list)}\n')
+            except UnicodeEncodeError:
+                print('Skipped line, unicode issues')
+
+
 def success_rate(success, failure):
     """Calculate and print the number, and percent, of files that could be read."""
     total_files = success + failure
@@ -48,7 +58,7 @@ if __name__ == '__main__':
     coll_directory = sys.argv[1]
 
     # Starts a variable for the text that is read.
-    full_text = []
+    coll_text = []
 
     # Starts variables for calculating the success rate of reading the files.
     read_true = 0
@@ -71,8 +81,14 @@ if __name__ == '__main__':
                 if file_read_error:
                     read_false += 1
                 else:
-                    full_text.append(file_text)
+                    coll_text.append(file_text)
                     read_true += 1
+
+        # Saves the AIP text to a file in coll_directory.
+        save_text(aip, aip_text)
+
+    # Saves the collection text to a file in coll_directory.
+    save_text(os.path.basename(coll_directory), coll_text)
 
     # Calculates and prints the success rate of reading the files.
     success_rate(read_true, read_false)
